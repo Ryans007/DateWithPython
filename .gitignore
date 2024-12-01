@@ -1,0 +1,37 @@
+# Ignorar a pasta do ambiente virtual
+venv/
+
+# Arquivos de configuração específicos do Jupyter Notebook
+.ipynb_checkpoints/
+
+# Arquivos gerados pelo sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários do Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Configurações de IDEs e editores de texto
+.vscode/
+.idea/
+*.swp
+
+# Arquivos grandes ou intermediários que não devem ser versionados
+*.log
+*.out
+*.err
+
+# Dados sensíveis ou arquivos locais
+.env
+*.env
+*.key
+*.secret
+
+# Outros arquivos temporários ou caches
+*.tmp
+*.bak
+*.backup
+*.cache
