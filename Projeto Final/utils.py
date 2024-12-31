@@ -1,5 +1,7 @@
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 import tensorflow as tf
 from keras import backend as K
 from keras.models import Sequential # type: ignore
@@ -91,14 +93,17 @@ def my_heatmap(dataframe):
     plt.title('Matriz de Correlação das Variáveis', fontsize=16)
     plt.show()
 
-def f1_score(y_true, y_pred):
-    y_pred = tf.round(y_pred) 
-    
-    true_positives = tf.reduce_sum(tf.cast(tf.equal(y_true, 1) & tf.equal(y_pred, 1), tf.float32))
-    possible_positives = tf.reduce_sum(tf.cast(tf.equal(y_true, 1), tf.float32))
-    predicted_positives = tf.reduce_sum(tf.cast(tf.equal(y_pred, 1), tf.float32))
-    
-    precision = true_positives / (predicted_positives + K.epsilon())
-    recall = true_positives / (possible_positives + K.epsilon())
-    
-    return 2 * (precision * recall) / (precision + recall + K.epsilon())
+def my_confusion_matrix(y_test, y_pred):
+    y_predict_binary = [1 if p >= 0.5 else 0 for p in y_pred]
+
+    if len(y_test.shape) > 1 and y_test.shape[1] > 1:
+        y_test_binary = [np.argmax(t) for t in y_test]
+    else:
+        y_test_binary = y_test
+
+    matriz_confusao = confusion_matrix(y_test_binary, y_predict_binary)
+
+    disp = ConfusionMatrixDisplay(confusion_matrix=matriz_confusao)
+    disp.plot(cmap=plt.cm.Blues) # type: ignore
+    plt.title("Matriz de Confusão")
+    plt.show()
